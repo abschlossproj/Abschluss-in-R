@@ -35,7 +35,7 @@ for (k in k_l) {
   }
   cat(adMatrix, '\n')
   adMatrix = ifelse(adMatrix == 1, TRUE, FALSE)
-  filename = paste(c('adMatrix_k', k, '.npy'), collapse = '')
-  npySave(filename, adMatrix)
+  filename = paste(c('adMatrix_k', k, '.rds'), collapse = '')
+  saveRDS(adMatrix, filename)
   cat('Saved ', filename, '\n')
 }

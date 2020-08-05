@@ -1,10 +1,9 @@
 library(dplyr)
-library(RcppCNPy)
 
-matrixFiles = list.files('.', pattern = 'adMatrix_*')
+(matrixFiles = list.files('.', pattern = '*rds'))
 
 for (matrix in matrixFiles) {
- load = npyLoad(matrix)
+ load = readRDS(matrix)
  cat('\nname: ', matrix, '\nSum of Columns: ', colSums(load), '\nSum of Diagonal: ', sum(diag(load)))
 }
 
