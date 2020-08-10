@@ -107,6 +107,8 @@ scenario = function(k, m, p) {
   documentation[is.na(documentation)] = 0
   
   
+  filename = paste(c(output_directory, '/documentation_simul_k0', k, 'm0', m, 'p', p*100, '.csv'), collapse = '')
+  write_csv(documentation, filename)
   print(data)
   print(documentation)
 }
