@@ -26,6 +26,7 @@ rdVector = function(n, fun) {
 }
 
 scenario = function(k, m, p) {
+  cat('calculating and saving csv for k =', k, ', m =', m, ', p =', p, '\n')
   p = 1/p
   adMatrix = readRDS(paste(c('adMatrix_k', k, '.rds'), collapse = ''))
   data = tibble(ID = 1:N,
@@ -35,10 +36,10 @@ scenario = function(k, m, p) {
                 isolation = FALSE,
                 course = '')
   
-  index = sample(N, 5, replace = TRUE)
+  index = sample(N, m, replace = TRUE)
   
   data[index,]['status'] = 'D'
-  data[index,]['duration'] = as.integer(runif(5, tmin, tmax))
+  data[index,]['duration'] = as.integer(runif(m, tmin, tmax))
   data[index,]['course'] = rdVector(m, diseaseCourse)
   
   documentation = tibble(day = 1:t,
@@ -54,6 +55,7 @@ scenario = function(k, m, p) {
   )
   
   for (currDay in 1:t) {
+    cat('\rprogress: ', (100 * currDay)/t, '%\t')
     data = mutate(data, 
                   day = ifelse(status == 'D', day + 1, day),
                   isolation = ifelse(day == x, TRUE, isolation))
@@ -106,13 +108,36 @@ scenario = function(k, m, p) {
                                             .before = 1)
   documentation[is.na(documentation)] = 0
   
+  p = 1/p
+  filename = paste(c(
+    output_directory, 
+    '/documentation_simul_k', 
+    ifelse(k >= 10, k, paste(c('0', k), collapse = '')), 
+    'm', 
+    ifelse(m >= 10, m, paste(c('0', m), collapse = '')), 
+    'p', 
+    ifelse(p >= 10, p, paste(c('0', p), collapse = '')), 
+    '.csv'), collapse = '')
   
-  filename = paste(c(output_directory, '/documentation_simul_k0', k, 'm0', m, 'p', p*100, '.csv'), collapse = '')
   write_csv(documentation, filename)
-  print(data)
-  print(documentation)
+  cat('Saved ', filename, '\n')
 }
 
-scenario(5,5,5)
+
+ks = c(5, 10, 20)
+ms = c(1, 5, 10)
+ps = c(10, 25, 50)
+
+i = 0
+for (k in ks) {
+  for (m in ms) {
+    for (p in ps) {
+      scenario(k, m, p)
+      
+      i = i + 1
+      cat('Finished files:', i, '/', length(ks) * length(ms) * length(ps), '\n')
+    }
+  }
+}
 
 
