@@ -155,7 +155,7 @@ ggsave(filename = paste0(graphics , '/time_line-colstacked.png'), width=w, heigh
           annotate(geom='text', x=75, y=4850,label='Dead'))
 
 ggsave(filename = paste0(graphics , '/time_line_linesimple.png'), width=w, height=h, units=u, dpi=dpi, plot=            
-         ggplot(doc_logDT, aes(x=days))+
+         ggplot(doc_logDT, aes(x=day))+
           geom_line(aes(y=D),color='#0072B2') +
           geom_line(aes(y=Iso),color='#56B4E9') +
           geom_line(aes(y=T),color='#D55E00') +
@@ -163,8 +163,8 @@ ggsave(filename = paste0(graphics , '/time_line_linesimple.png'), width=w, heigh
 
 ggsave(filename = paste0(graphics , '/changes.png'), width=w, height=h, units=u, dpi=dpi, plot=
          ggplot(doc_change, aes(x=days))  +
-          geom_col(aes(y=D_new), position='dodge',fill= 'orange', width=0.8) +
-          geom_col(aes(y=R_new), position='dodge',fill='blue', width=0.8,alpha=.6) +
+          geom_col(aes(y=D_New), position='dodge',fill= 'orange', width=0.8) +
+          geom_col(aes(y=R_New), position='dodge',fill='blue', width=0.8,alpha=.6) +
           geom_col(aes(y=T_new_pos),fill='red', width=1)+
           labs(title='Daily new infected, recovered and deceased', x='', y='daily new cases') +
           xlim(0,80)) 
