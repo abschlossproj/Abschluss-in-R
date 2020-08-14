@@ -42,7 +42,7 @@ scenario = function(k, m, p) {
   data[index,]['duration'] = as.integer(runif(m, tmin, tmax))
   data[index,]['course'] = rdVector(m, diseaseCourse)
   
-  documentation = tibble(day = 1:t,
+  documentation = tibble(days = 1:t,
                          H = integer(t),
                          D = integer(t),
                          R = integer(t),
@@ -113,9 +113,9 @@ scenario = function(k, m, p) {
     output_directory, 
     '/documentation_simul_k', 
     ifelse(k >= 10, k, paste(c('0', k), collapse = '')), 
-    'm', 
+    '_m', 
     ifelse(m >= 10, m, paste(c('0', m), collapse = '')), 
-    'p', 
+    '_p', 
     ifelse(p >= 10, p, paste(c('0', p), collapse = '')), 
     '.csv'), collapse = '')
   
