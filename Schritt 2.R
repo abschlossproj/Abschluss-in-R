@@ -31,7 +31,7 @@ scenario = function(k, m, p) {
   adMatrix = readRDS(paste(c('adMatrix_k', k, '.rds'), collapse = ''))
   data = tibble(ID = 1:N,
                 status = 'H', 
-                day = integer(N), 
+                days = integer(N), 
                 duration = integer(N), 
                 isolation = FALSE,
                 course = '')
@@ -57,10 +57,10 @@ scenario = function(k, m, p) {
   for (currDay in 1:t) {
     cat('\rprogress: ', (100 * currDay)/t, '%\t')
     data = mutate(data, 
-                  day = ifelse(status == 'D', day + 1, day),
-                  isolation = ifelse(day == x, TRUE, isolation))
+                  days = ifelse(status == 'D', days + 1, days),
+                  isolation = ifelse(days == x, TRUE, isolation))
     
-    crit = filter(data, day == duration & status == 'D')[['ID']]
+    crit = filter(data, days == duration & status == 'D')[['ID']]
     data = mutate(data, 
                     status = ifelse(is.element(ID, crit), ifelse(rbinom(1, 1, mr), 'T', 'R'), status),
                     isolation = ifelse(ID %in% crit, FALSE, isolation),
@@ -87,16 +87,16 @@ scenario = function(k, m, p) {
     courses = table(data$course)
     
     documentation = mutate(documentation,
-                           H = ifelse(day == currDay, stati['H'], H),
-                           D = ifelse(day == currDay, stati['D'], D),
-                           R = ifelse(day == currDay, stati['R'], R),
-                           T = ifelse(day == currDay, stati['T'], T),
+                           H = ifelse(days == currDay, stati['H'], H),
+                           D = ifelse(days == currDay, stati['D'], D),
+                           R = ifelse(days == currDay, stati['R'], R),
+                           T = ifelse(days == currDay, stati['T'], T),
                            
-                           Iso = ifelse(day == currDay, sum(data$isolation), Iso),
+                           Iso = ifelse(days == currDay, sum(data$isolation), Iso),
                            
-                           L = ifelse(day == currDay, courses['L'], L),
-                           M = ifelse(day == currDay, courses['M'], M),
-                           S = ifelse(day == currDay, courses['S'], S))
+                           L = ifelse(days == currDay, courses['L'], L),
+                           M = ifelse(days == currDay, courses['M'], M),
+                           S = ifelse(days == currDay, courses['S'], S))
     
   }
   

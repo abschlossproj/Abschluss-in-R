@@ -36,7 +36,7 @@ t = 105
 docm05 = docs[docs['m'] == 5,]
 file = files[25] #arbitrarely chosen scenario with a nice development
 
-doc = read_delim(file.path(WorkingDirectory,'documentation_tables', file), delim=',')
+doc = read_delim(file.path(WorkingDirectory,'documentation_tables', file), delim = ',')
 
 
 
