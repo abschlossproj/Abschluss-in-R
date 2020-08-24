@@ -100,7 +100,7 @@ u = 'cm'
 dpi = 300
 
 # Mimicking the ZIB Plots on Instagramm
-#ggsave(filename = paste0(graphics , '/ZIB-like.png'), width = w, height = w, units= u , dpi = dpi,  plot = 
+ggsave(filename = paste0(graphics , '/ZIB-like.png'), width = w, height = w, units= u , dpi = dpi,  plot = 
         ggplot(doc_change, aes(x = days, y = D_New)) +
           geom_col(fill = 'white', width = .8) + 
           geom_smooth(aes(x = days, y = D_New), colour = 'yellow', size = 1.5, se = FALSE) +
@@ -111,7 +111,7 @@ dpi = 300
                 axis.text = element_text(colour = 'white'), axis.title = element_text(colour = 'white'), 
                 axis.line = element_line(colour = 'white'), plot.title = element_text(colour = 'white')) +
           xlim(0,13) #value in R as c()?
-#)
+)
 
 
 g = ggplot(docm05, aes(x = 'days'))
