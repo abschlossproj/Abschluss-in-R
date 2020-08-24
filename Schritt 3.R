@@ -1,3 +1,12 @@
+'
+This script loads the .csv files from documentation_tables/, combines them into a single dataframe.
+Some graphics are then generated to compare the scenarios and different interesting developments.
+To that end, some more rows are generated out of the existing ones.
+As scenarios the difference between k and p seems most interesting, so m is fixed mostly at 5.
+One scenario is randomly chosen to illustrate further
+The graphics are saved to graphics/
+'
+
 #install.packages('tidyverse')
 #install.packages('ggplot2')
 
@@ -126,8 +135,8 @@ ggsave(filename = paste0(graphics , '/pkm_facet.png'), width = w, height = h, un
 
 # line-graphs, die die totalen Infizierten über verschiedenen p,k vergleichen
 ggsave(filename = paste0(graphics , '/line_pk.png'), width = w, height = (1.5 * h), units = u, dpi = dpi, plot =
-         g + geom_line(aes(x = days, y = D, color = k)) + facet_wrap(p~k)) +
-          labs(y='infected persons', title='Only the strictest measures flatten the curve') + scale_color_gradient(guide=False) + theme_void()
+         g + geom_line(aes(x = days, y = D, color = k)) + facet_wrap(p~k) +
+          labs(y='infected persons', title='Only the strictest measures flatten the curve'))
 
 g_int = ggplot(doc_interest, aes(y = D))
 
@@ -156,10 +165,10 @@ ggsave(filename = paste0(graphics , '/time_line-colstacked.png'), width = w, hei
           geom_col(aes(y = D),fill = 'yellow',position='stack') +
           geom_col(aes(y = H),fill = 'blue',position='stack') +
           labs(y = '', title = 'Ratio of populace that is infected, recovered or dead') + theme_bw() + xlim(0,80) +
-          annotate(geom = 'text', x = 39, y = 3000,label = 'Infected') +
-          annotate(geom = 'text', x = 55, y = 4000, label = 'Recovered') +
-          annotate(geom = 'text', x = 14, y = 1900, label = 'Healthy') +
-          annotate(geom = 'text', x = 75, y = 4850, label = 'Dead'))
+          annotate(geom = 'text', x = 12, y = 2850,label = 'Infected') +
+          annotate(geom = 'text', x = 40, y = 3850, label = 'Recovered') +
+          annotate(geom = 'text', x = 4, y = 1850, label = 'Healthy') +
+          annotate(geom = 'text', x = 65, y = 4850, label = 'Dead'))
 
 ggsave(filename = paste0(graphics , '/time_line_linesimple.png'), width = w, height = h, units = u, dpi = dpi, plot =            
          ggplot(doc_logDT, aes(x = days)) +

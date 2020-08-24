@@ -1,2 +1,10 @@
-adMatrix_k*.npy
+#adMatrix_k*.npy
 .Rhistory
+
+__pychache__
+.pynb_checkpoints
+*.ipynb
+.Rhistory
+.ipynb_checkpoints/
+__pychache__/
+**__pycache__**
